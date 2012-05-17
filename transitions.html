@@ -1,0 +1,115 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title></title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		h1 span {
+			display: inline-block;
+		}
+		h2 {
+			font-size: 20px;
+			color: #888;
+			border-top: 1px solid #999;
+			padding-top: 10px;
+			margin-top: 2em;
+		}
+		.btn {
+			font-size: 18px;
+			position: relative;
+			top: -4px;
+		}
+
+		code {
+			background: #555;
+			padding: 3px 5px;
+			border-radius: 5px;
+			color: #FFF
+		
+		}
+
+		ol li {
+			padding: 5px;
+			color: #999;
+		}
+
+	</style>
+</head>
+<body>
+<header>
+
+</header>
+<div id="main" role="main">
+	<h1>Add CSS3 effects and transitions to your popcorn plugins</h1>
+	<h2>Transitions</h2>
+	<ol>
+		<li>Add <code>.transition [your transition]</code> to your popcorn container</li>
+		<li>Add <code>.on</code> in your <code>start</code> function, and remove it in your <code>end</code> function.</li>
+		<li>Done!</li>
+	</ol>
+	<h1>
+	  <span class="transition fade on">Fade</span>
+	  <button class="btn">.fade</button>
+	</h1>
+	<h1>
+	  <span class="pop">Pop</span>
+	  <button class="btn">.pop</button>
+	</h1>
+	<h1>
+	  <span class="transition focus on">Blur</span>
+	  <button class="btn">.focus</button>
+	</h1>
+	<h1>
+	  <span class="transition fly-in on">Fly in</span>
+	  <button class="btn">.fly-in</button>
+	</h1>
+	<h1>
+	  <span class="transition slide on">Slide</span>
+	  <button class="btn">.slide</button>
+	</h1>
+	<h1>
+	  <span class="transition slide focus on">Slide + Focus</span>
+	  <button class="btn">.slide.focus</button>
+	</h1>
+	<h1>
+	  <span class="transition grow">Grow</span>
+	  <button class="btn">.grow</button>
+	</h1>
+
+	<h2>Effects</h2>
+	<h1><span class="rumble">Rumble (.rumble)</span></h1>
+	<h1><span class="blur">Blur (.blur)</span></h1>
+	<h1><span class="flicker">Flicker</span> <button class="btn">.flicker</button></h1>
+
+</div>
+<footer>
+
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+<script>
+	var buttons = document.querySelectorAll( "#main h1 button" );
+	
+	for(var i=0;i<buttons.length;i++) {
+		buttons[i].addEventListener( "click", function(e) {
+			var parent = this.parentNode.children[0];
+			if ( parent.classList.contains( "on" ) ) {
+				parent.classList.remove( "on" );
+			} else {
+				parent.classList.add( "on" );
+			}	
+		}, false);
+	}
+</script>
+
+</body>
+</html>
