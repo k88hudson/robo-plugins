@@ -16,13 +16,13 @@ document.addEventListener( "DOMContentLoaded", function( e ){
 		}
 	});
 
+popcorn.on("canplayall", init );
 
-	popcorn.mute();
-
+function init() {
 	//POPCORN SPEAK
 	popcorn.speak({
 		start: 1,
-		end: 5,
+		end: 3,
 		text: "How cool is this?",
 		pitch: 70,
 		showText: true,
@@ -31,13 +31,34 @@ document.addEventListener( "DOMContentLoaded", function( e ){
 		callback: function( container ) {
 			$("#speak > span").lettering();
 			$("#speak > span > span").addClass("rumble");
+			$("#video").fadeIn();
 		}
 	});
+	popcorn.speak({
+		start: 4,
+		end: 6,
+		text: "I would like to tell you something",
+		pitch: 30,
+		showText: true,
+		pluginPath: "js/plugins/speak/",
+		target: "speak",
+	});
+
+	popcorn.speak({
+		start: 7,
+		end: 10,
+		text: "Robots are going to take over the world and there's nothing you can do to stop us.",
+		pitch: 100,
+		showText: true,
+		pluginPath: "js/plugins/speak/",
+		target: "speak",
+	});
+
 
 	//POPCORN SPEAK
 	popcorn.zoink({
-		start: 3,
-		end: 6,
+		start: 6,
+		end: 10,
 		text: "<img src=\"img/zoink.png\" />",
 		top: 20,
 		left: 70,
@@ -46,14 +67,18 @@ document.addEventListener( "DOMContentLoaded", function( e ){
 
 	//POPCORN SPEAK
 	popcorn.zoink({
-		start: 4,
-		end: 8,
+		start: 8,
+		end: 12,
 		text: "I was just thinking that popcorn is totally awesome. Don't you agree?",
 		top: 20,
 		left: 20,
 		style: "thought",
 		target: "video-container"
 	});
+
+	popcorn.mute();
+	popcorn.off("canplayall", init);
+}
 
 }, false);
 

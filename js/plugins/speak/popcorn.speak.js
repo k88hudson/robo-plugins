@@ -133,9 +133,10 @@
               return ret;
             }
             
-            var audioContainer = document.createElement("div");
-            audioContainer.innerHTML=("<audio id=\""+options.target+"-player\" src=\"data:audio/x-wav;base64,"+encode64(wav)+"\">");
-            target.appendChild( audioContainer );
+            options._container = document.createElement("div");
+            options._container.id = "container-" + Popcorn.guid();
+            options._container.innerHTML=("<audio id=\""+Popcorn.guid()+"-player\" src=\"data:audio/x-wav;base64,"+encode64(wav)+"\">");
+            target.appendChild( options._container );
           }
 
           function playAudioDataAPI(data) {
@@ -202,7 +203,8 @@
   
       },
       start: function( event, options ) {
-        document.getElementById( options.target + "-player").play();
+        console.log(options._container);
+        options._container.children[0].play();
         options.showTextEl.style.display = "block";
       },
     

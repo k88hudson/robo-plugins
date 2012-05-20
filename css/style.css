@@ -76,7 +76,7 @@ td { vertical-align: top; }
 
 body{ background: #222; color: #FFF;}
 #main { padding-top: 40px; width: 760px; margin: 0 auto;}
-#video, #video-container, .video-overlay { width: 760px; height: 480px; } /* Important: height and width of video. */
+#video, #video-container, .video-overlay { width: 640px; height: 480px; } /* Important: height and width of video. */
 .video-overlay { height: 450px; } /* Account for controls. */
 
 #video-container { position: relative; overflow: hidden;}
