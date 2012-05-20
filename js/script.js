@@ -48,12 +48,11 @@ function init() {
 		start: 7,
 		end: 10,
 		text: "Robots are going to take over the world and there's nothing you can do to stop us.",
-		pitch: 100,
+		pitch: 120,
 		showText: true,
 		pluginPath: "js/plugins/speak/",
 		target: "speak",
 	});
-
 
 	//POPCORN SPEAK
 	popcorn.zoink({
@@ -67,8 +66,8 @@ function init() {
 
 	//POPCORN SPEAK
 	popcorn.zoink({
-		start: 8,
-		end: 12,
+		start: 18,
+		end: 21,
 		text: "I was just thinking that popcorn is totally awesome. Don't you agree?",
 		top: 20,
 		left: 20,
@@ -76,7 +75,18 @@ function init() {
 		target: "video-container"
 	});
 
-	popcorn.mute();
+	popcorn.googlemap({
+        start: 13,
+        end: 18,
+        type: "STAMEN-TONER", // STAMEN-WATERCOLOR, STAMEN-TERRAIN
+        target: "map",
+        lat: 37.7706,
+        lng: -122.3782,
+        zoom: 12
+      })
+
+
+	popcorn.volume(0.5);
 	popcorn.off("canplayall", init);
 }
 

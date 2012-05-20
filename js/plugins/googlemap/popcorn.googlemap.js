@@ -57,7 +57,8 @@ var googleCallback;
     if ( layer ) {
       map.mapTypes.set( layer, new google.maps.StamenMapType( layer ));
     }
-    map.getDiv().style.display = "none";
+    
+    map.getDiv().classList.add("off");
 
     return map;
   }
@@ -178,7 +179,8 @@ var googleCallback;
         // ensure the map has been initialized in the setup function above
         var isMapSetup = function() {
           if ( map ) {
-            map.getDiv().style.display = "block";
+            map.getDiv().classList.add("on");
+            map.getDiv().classList.remove("off");
             // reset the location and zoom just in case the user plaid with the map
             google.maps.event.trigger( map, "resize" );
             map.setCenter( location );
@@ -349,7 +351,8 @@ var googleCallback;
         // if the map exists hide it do not delete the map just in
         // case the user seeks back to time b/w start and end
         if ( map ) {
-          map.getDiv().style.display = "none";
+          map.getDiv().classList.remove("on");
+          map.getDiv().classList.add("off");
         }
       },
       _teardown: function ( options ) {

@@ -77,15 +77,19 @@ td { vertical-align: top; }
 body{ background: #222; color: #FFF;}
 #main { padding-top: 40px; width: 760px; margin: 0 auto;}
 #video, #video-container, .video-overlay { width: 640px; height: 480px; } /* Important: height and width of video. */
-.video-overlay { height: 450px; } /* Account for controls. */
+.video-overlay { position: absolute; top: 0; left: 0; height: 450px; z-index: 1100;} /* Account for controls. */
 
 #video-container { position: relative; overflow: hidden;}
-.video-overlay { position: absolute; top: 0; left: 0;}
 
 #title-card {
   text-align: center; 
   background: url(../img/starfield.jpg) repeat;
   color: #F6DC7E; 
+  font-family: 'Jolly Lodger'; 
+  z-index: -1;
+}
+#title-card.on {
+  z-index: 1000;
 }
 
 #pop {
@@ -95,10 +99,8 @@ body{ background: #222; color: #FFF;}
   z-index: 1000;
 }
 
-.zoink-container { position: absolute; }
-
-/* TRANSITIONS  ======================================================== */
-.transition {
+#map .on{
+  opacity: 0.6;
   -webkit-transition: all 1s ease-in-out;
   -moz-transition: all 1s ease-in-out;
   -o-transition: all 1s ease-in-out;
@@ -106,6 +108,24 @@ body{ background: #222; color: #FFF;}
   transition: all 1s ease-in-out;
 }
 
+#map .off {
+  opacity: 0;
+}
+
+.zoink-container { position: absolute; }
+
+/* TRANSITIONS  ======================================================== */
+.on {
+  z-index: 1000;
+}
+
+.transition {
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+}
 .transition.slide {
   -webkit-transform: translate(-300px, 0);
   -moz-transform: translate(-300px, 0);
