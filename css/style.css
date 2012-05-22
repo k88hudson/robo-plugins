@@ -77,20 +77,22 @@ td { vertical-align: top; }
 body{ background: #222; color: #FFF;}
 #main { padding-top: 40px; width: 760px; margin: 0 auto;}
 #video, #video-container, .video-overlay { width: 640px; height: 480px; } /* Important: height and width of video. */
-.video-overlay { position: absolute; top: 0; left: 0; height: 450px; z-index: 1100;} /* Account for controls. */
+.video-overlay { position: absolute; top: 0; left: 0; height: 450px; z-index: 1000;} /* Account for controls. */
 
 #video-container { position: relative; overflow: hidden;}
 
 #title-card {
   text-align: center; 
-  background: url(../img/starfield.jpg) repeat;
   color: #F6DC7E; 
   font-family: 'Jolly Lodger'; 
-  z-index: -1;
-}
-#title-card.on {
   z-index: 1000;
 }
+
+#speak {
+  font-size: 80px;
+}
+
+#flickr p { display: none; };
 
 #pop {
   position: absolute;
@@ -112,7 +114,92 @@ body{ background: #222; color: #FFF;}
   opacity: 0;
 }
 
-.zoink-container { position: absolute; }
+.speechBubble {
+  opacity: 0;
+  font-family: "digital-strip";
+  font-size: 16px;
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 70px;
+  max-width: 200px;
+  box-shadow: 3px 3px 7px rgba(0,0,0,.2);
+  background: #FFF;
+  color: #222;
+}
+.on .speechBubble{ opacity: 1; }
+
+.speechBubble.full-width { width: 100%; }
+.speechBubble.connected { margin-bottom: 15px; }
+.speechBubble.fx div.text { text-align: center; font-size: 45px; font-weight: bold; padding: 10px;}
+
+.speechBubble .canvas {
+  position: absolute;
+  -webkit-transform-origin: 30% 0%;
+  z-index: 1001;
+}
+
+/* HORIZONTAL POSITIONING */
+.speechBubble.right .canvas { right: 15px; }
+.speechBubble.left .canvas { left: 15px; }
+
+/* BOTTOM */
+.speechBubble { margin-bottom: 60px; }
+.speechBubble .canvas { bottom: -59px; -webkit-transform: scale(1, 1); }
+.speechBubble.flip .canvas { -webkit-transform: scale(-1, 1); }
+.speechBubble.thought .canvas { bottom: -65px; }
+.speechBubble.long .canvas { bottom: -58px; -webkit-transform: scale(1, 1.5); }
+.speechBubble.long.flip .canvas{ -webkit-transform: scale(-1, 1.5); }
+
+/*TOP*/
+.speechBubble.top { margin-bottom: 15px; }
+.speechBubble.top .canvas {  top: 1px; -webkit-transform: scale(1, -1); }
+.speechBubble.top.flip .canvas { -webkit-transform: scale(1, -1); }
+.speechBubble.thought.top .canvas { top: -5px; }
+.speechBubble.long.top .canvas {  top: 2px; -webkit-transform: scale(1, -1.5); }
+.speechBubble.long.top.flip .canvas { -webkit-transform: scale(1, -1.5); }
+
+.speechBubble .pipe{ 
+  background: white;
+  position: absolute;
+  width: 10px;
+  height: 30px;
+  -webkit-transform-origin: top center;
+  -webkit-transform: rotate(-15deg);
+  border: 1px solid 
+  black;
+  border-top: 0;
+  border-bottom: 0;
+  bottom: -25px;
+  right: 35px;
+  z-index: 1000;
+}
+/*
+.zoink-container { 
+  position: absolute; 
+  display: inline-block;
+  max-width: 300px;
+  color: #444;
+  font-family: "digital-strip", sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 1;
+}
+.zoink-container.fx {
+  font-family: "comic-fx";
+  font-size: 100px;
+  text-transform: uppercase;
+  color: #FEEC3A;
+  font-weight: normal;
+}
+
+.zoink-container > div {
+  padding: 20px;
+}
+/*
 
 /* TRANSITIONS  ======================================================== */
 .on {

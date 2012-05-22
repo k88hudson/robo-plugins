@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<!-- Created with Ai->Canvas Export Plug-In Version 1.0 (Mac) -->
+<!-- By Mike Swanson (http://blogs.msdn.com/mswanson/)        -->
+<!-- and MIX Online  (http://visitmix.com/)                   -->
+
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/fonts/digital-strip.css">
+  <link rel="stylesheet" href="css/fonts/comic-fx.css">
+  <style>
+    body { padding-top: 40px; background: #444; color: #FFF; font-family: sans-serif;}
+    #main { width: 960px; margin: 0 auto; display: none; }
+    #main .column { width:300px; float: left; margin-right: 30px;}
+    #main .column:last-child { margin-right: 0; }
+    .row:after{
+      clear: both;
+      content: ".";
+      display: block;
+      height: 0;
+      visibility: hidden;
+      font-size: 0;
+    }
+    #comic { position: relative; display: inline-block; }
+    #ben { width: 100%; }
+    
+    .move { display: none; font-family: "digital-strip"; position: absolute; top: -10px; left: 0; background: red; font-size: 11px; text-transform: uppercase; padding: 7px; }
+    .container:hover .move { display: block; }
+
+    .container {
+      z-index: 1000;
+    }
+    .speechBubble {
+      font-family: "digital-strip";
+      line-height: 1;
+      position: relative;
+      display: inline-block;
+      border: 2px solid black;
+      padding: 10px;
+      border-radius: 5px;
+      min-width: 70px;
+      max-width: 200px;
+      box-shadow: 3px 3px 7px rgba(0,0,0,.2);
+      background: #FFF;
+      color: #222;
+    }
+
+    .speechBubble.full-width { width: 100%; }
+    .speechBubble.connected { margin-bottom: 15px; }
+    .speechBubble.fx div.text { text-align: center; font-size: 45px; font-weight: bold; padding: 10px;}
+
+    .speechBubble .canvas {
+      position: absolute;
+      -webkit-transform-origin: 30% 0%;
+      z-index: 1001;
+    }
+    
+    /* HORIZONTAL POSITIONING */
+    .speechBubble.right .canvas { right: 15px; }
+    .speechBubble.left .canvas { left: 15px; }
+    
+    /* BOTTOM */
+    .speechBubble { margin-bottom: 60px; }
+    .speechBubble .canvas { bottom: -59px; -webkit-transform: scale(1, 1); }
+    .speechBubble.flip .canvas { -webkit-transform: scale(-1, 1); }
+    .speechBubble.thought .canvas { bottom: -65px; }
+    .speechBubble.long .canvas { bottom: -58px; -webkit-transform: scale(1, 1.5); }
+    .speechBubble.long.flip .canvas{ -webkit-transform: scale(-1, 1.5); }
+
+    /*TOP*/
+    .speechBubble.top { margin-bottom: 15px; }
+    .speechBubble.top .canvas {  top: 1px; -webkit-transform: scale(1, -1); }
+    .speechBubble.top.flip .canvas { -webkit-transform: scale(1, -1); }
+    .speechBubble.thought.top .canvas { top: -5px; }
+    .speechBubble.long.top .canvas {  top: 2px; -webkit-transform: scale(1, -1.5); }
+    .speechBubble.long.top.flip .canvas { -webkit-transform: scale(1, -1.5); }
+
+    .speechBubble .pipe{ 
+      background: white;
+      position: absolute;
+      width: 10px;
+      height: 30px;
+      -webkit-transform-origin: top center;
+      -webkit-transform: rotate(-15deg);
+      border: 1px solid 
+      black;
+      border-top: 0;
+      border-bottom: 0;
+      bottom: -25px;
+      right: 35px;
+      z-index: 1000;
+    }
+
+  </style>
+  <title>triangle</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="js/libs/vintage.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+  <script>
+
+  document.addEventListener( "DOMContentLoaded", function( e ){
+      
+      // https://github.com/rendro/vintageJS
+      $("#ben").vintage({
+        vignette: {
+            black: 0.8,
+            white: 0.1
+        },
+        noise: 40,
+        screen: {
+            red: 103,
+            green: 65,
+            blue: 13,
+            strength: 0.3
+        },
+        desaturate: 0.8,
+        callback: function() {
+          $("#main").fadeIn();
+        }
+      });
+
+      //Add speech bubble
+      addSpeechBubble( "comic", {
+        text: "My hair is <strong>royally</strong> awesome.",
+        style: "thought",
+        classes: "flip right",
+        top: 20,
+        left: 70,
+        width: 100
+      });
+
+      //Add speech bubble
+      addSpeechBubble( "menu", {
+        text: "Drag me...",
+        style: "thought",
+        classes: "flip right",
+        top: 0,
+        left: 0
+      });
+
+      addSpeechBubble( "menu", {
+        text: "Drag me...",
+        style: "speech",
+        classes: "fx top right",
+        top: 20,
+        left: 0
+      });
+
+      //Add speech bubble
+      addSpeechBubble( "menu", {
+        text: [
+          {
+            text: "Popcorn.js is an HTML5 media framework written in JavaScript for filmmakers, web developers, and anyone who wants to create <strong>time-based interactive media</strong> on the web.",
+            style: "speech",
+            classes: "top right"
+          },
+          {
+            text: "gnarly!",
+            classes: "fx"
+          },
+          {
+            text: "Also, Popcorn.js is part of <a href=\"http://mozillapopcorn.org/\">Mozilla's Popcorn</a> project.",
+            style: "none"
+          } 
+        ],
+        top: 50,
+        left: 0,
+        width: 200
+      });
+
+      makeTriangle( "speech1", { style: "pipe" } );
+      
+      makeTriangle( "speech2", { 
+        style: "speech", 
+        classes: "right bottom"
+      });
+      
+      makeTriangle( "speech3", { style: "thought" } );
+      makeTriangle( "speech4", { style: "speech", classes: "flip top left" } );
+      makeTriangle( "speech5", { classes: "fx pipe" } );
+      makeTriangle( "speech6", { style: "speech", classses: "bottom right" } );
+      makeTriangle( "speech7", { style: "speech", classes: "bottom left long flip" } );
+
+      $("#comic .container").draggable();
+
+      $("#menu .container").draggable({ 
+          containment: 'html',
+          helper: 'clone',
+          stop: function(event, ui) {
+              $(ui.helper).clone(true)
+              .append('<span class="move">grab to move</span>')
+              .addClass('container-clone')
+              .appendTo('body')
+              .draggable({handle:".move"})
+              .removeClass('ui-draggable ui-draggable-dragging')
+              .find(".speechBubble .text").html("edit me").attr("contenteditable", true);
+
+              /*
+              $(".move").click(function(){
+                $(this).parent().draggable({
+                  stop: function(event, ui) {
+                    $(this).draggable("destroy");
+                  }
+                  });
+              });
+              */
+          }
+      });
+
+      function addSpeechBubble( id, args ) {
+        !args && ( args = {} );
+
+        var target = document.getElementById(id),
+            container = document.createElement("div"),
+            width = args.width || 200,
+            top = args.top || 0,
+            left = args.left || 0,
+            i;
+
+        container.classList.add("container");
+        container.style.position = "absolute";
+        container.style.top = top + "%";
+        container.style.left = left + "%";
+        container.style.width = width + "px";
+        target.appendChild( container );
+
+        if( typeof args.text === "string" ) {
+          _makeBubble( { text: args.text, style: args.style, classes: args.classes } );
+        }
+        else if ( typeof args.text === "object" ) {
+          for(i = 0; i<args.text.length; i++) {
+
+            args.text[i].classes || ( args.text[i].classes = "" );
+            //Set the default type to be none instead of speech
+            if( args.text[i].style === undefined) {
+              args.text[i].style = "none";
+            }
+            if( i !== args.text.length - 1 ) {
+              args.text[i].classes += " pipe";
+            }
+            _makeBubble( { text: args.text[i].text, style: args.text[i].style, classes: args.text[i].classes + " full-width" } );
+          }
+        }
+
+        function _makeBubble( bubbleArgs ) {
+          var bubble = document.createElement("div"),
+              innerText = document.createElement("div"),
+              text = bubbleArgs.text || "",
+              style = bubbleArgs.style || "speech",
+              classes = bubbleArgs.classes || "bottom right";
+
+          innerText.innerHTML = text;
+          innerText.className = "text";
+          bubble.appendChild( innerText );
+          container.appendChild( bubble );
+          makeTriangle( bubble, { style: style, classes: classes } );  
+        }
+
+      }
+
+      function makeTriangle( bubble, args ) {
+        !args && ( args = {} );
+        args.style || ( args.style = "" );
+
+        var elem,
+            canvas,
+            src,
+            triangle,
+            pipe,
+            ctx,
+            classes = args.classes;
+
+        //Check if the input is a string or an actual element
+        if (typeof bubble === "string") {
+          elem = document.getElementById(bubble);
+        } else {
+          elem = bubble;
+        }
+
+        elem.className =  "speechBubble " + args.style + " " + classes;
+        if( args.style === "speech" || args.style === "thought" ){
+          
+          canvas = document.createElement("canvas");
+          ctx = canvas.getContext("2d");
+
+          canvas.width = 40;
+          canvas.height = 60;
+
+          //Draw according to the style
+          args.style === "speech" && drawSpeech( ctx );
+          args.style === "thought" && drawThought( ctx );
+
+          //Now make the image
+          src = canvas.toDataURL();
+          triangle = document.createElement( "img" );
+          triangle.src = src;
+          triangle.className = "canvas"
+          elem.appendChild( triangle );
+        }
+
+        if ( args.classes && args.classes.indexOf("pipe") !== -1 ){
+          console.log("foo");
+          elem.className +=  " connected pipe";
+          pipe = document.createElement("div");
+          pipe.className = "pipe";
+          elem.appendChild( pipe );
+        }
+
+        function drawSpeech(ctx) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(0.4, 0.3);
+          ctx.bezierCurveTo(0.4, 0.3, 17.8, 26.3, 15.1, 41.9);
+          ctx.bezierCurveTo(15.1, 41.9, 26.2, 26.3, 23.4, 0.3);
+          ctx.fillStyle = "rgb(255, 255, 255)";
+          ctx.fill();
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        function drawThought(ctx) {
+           // circle1
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(13.5, 7.0);
+            ctx.bezierCurveTo(13.5, 10.6, 10.6, 13.5, 7.0, 13.5);
+            ctx.bezierCurveTo(3.4, 13.5, 0.5, 10.6, 0.5, 7.0);
+            ctx.bezierCurveTo(0.5, 3.4, 3.4, 0.5, 7.0, 0.5);
+            ctx.bezierCurveTo(10.6, 0.5, 13.5, 3.4, 13.5, 7.0);
+            ctx.closePath();
+            ctx.fillStyle = "rgb(255, 255, 255)";
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // circle2
+            ctx.beginPath();
+            ctx.moveTo(17.5, 23.8);
+            ctx.bezierCurveTo(17.5, 26.1, 15.6, 28.0, 13.2, 28.0);
+            ctx.bezierCurveTo(10.9, 28.0, 9.0, 26.1, 9.0, 23.8);
+            ctx.bezierCurveTo(9.0, 21.4, 10.9, 19.5, 13.2, 19.5);
+            ctx.bezierCurveTo(15.6, 19.5, 17.5, 21.4, 17.5, 23.8);
+            ctx.closePath();
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // circle3
+            ctx.beginPath();
+            ctx.moveTo(27.5, 31.8);
+            ctx.bezierCurveTo(27.5, 33.5, 26.0, 35.0, 24.2, 35.0);
+            ctx.bezierCurveTo(22.5, 35.0, 21.0, 33.5, 21.0, 31.8);
+            ctx.bezierCurveTo(21.0, 30.0, 22.5, 28.5, 24.2, 28.5);
+            ctx.bezierCurveTo(26.0, 28.5, 27.5, 30.0, 27.5, 31.8);
+            ctx.closePath();
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.restore();
+        }
+      }
+  }, false);    
+  </script>
+ </head>
+ <body>
+  <div id="main">
+    <h1>Speech Bubbles with CSS3 + Canvas</h1>
+    <div class="row">
+      <section class="column">
+        <div id="menu"></div>
+        <div id="comic">
+          <img id="ben" src="img/ben.png"/>
+        </div> 
+      </section>
+      <section class="column">
+        <div class="speechBubble" id="speech1">
+          <div>The next step is to set up a <strong>root password</strong> for mysql there are 2 ways to do this one is a regular way and the other provides additional security:</div>
+        </div>
+        <div class="speechBubble" id="speech2">
+          <div>The next step is to set up a root password for mysql there are 2 ways to do this one is a regular way and the other provides additional security:</div>
+        </div>
+      </section>
+      <section class="column">
+         <div class="speechBubble" id="speech3">
+          <div contenteditable="true">The next step is to set up a root password for mysql there are 2 ways to do this one is a regular way and the other provides additional security:</div>
+        </div>
+        <div class="speechBubble" id="speech4">
+          <div>The next step is to set up a root password for mysql there are 2 ways to do this one is a regular way and the other provides additional security:</div>
+        </div>
+        <div class="speechBubble fx" id="speech5">
+          <div class="text">kablamo!</div>
+        </div>
+        <div class="speechBubble" id="speech6">
+          <div>The next step is to set up a root password for mysql there are 2 ways to do this one is a regular way and the other provides additional security:</div>
+        </div>
+         <div class="speechBubble" id="speech7">
+          <div>The next step is to set up a root password for mysql there are 2 ways to do this one is a regular way and the other provides additional security:</div>
+        </div>
+      </section>
+    </div>
+    <div><script src="https://gist.github.com/2763273.js"> </script></div>
+  </div>
+ </body>
+</html>

@@ -5,7 +5,9 @@ Kate
 document.addEventListener( "DOMContentLoaded", function( e ){
 
 	var popcorn = Popcorn("#video");
-		popcorn.code({
+	
+	/*
+	popcorn.code({
 		start:1,
 		end: 7,
 		onStart: function( options ) {
@@ -15,29 +17,30 @@ document.addEventListener( "DOMContentLoaded", function( e ){
 			document.getElementById("title-card").classList.remove("on");
 		}
 	});
-
+*/
 popcorn.on("canplayall", init );
 
 function init() {
 	//POPCORN SPEAK
 	popcorn.speak({
 		start: 1,
-		end: 3,
-		text: "How cool is this?",
+		end: 6,
+		text: "Hey guys, so this is a robot video",
 		pitch: 70,
 		showText: true,
 		pluginPath: "js/plugins/speak/",
 		target: "speak",
 		callback: function( container ) {
-			$("#speak > span").lettering();
-			$("#speak > span > span").addClass("rumble");
-			$("#video").fadeIn();
+			$("#speak").addClass("rumble");
+			//$("#speak > span").lettering();
+			//$("#speak > span > span").addClass("rumble");
+			//$("#video").fadeIn();
 		}
 	});
 	popcorn.speak({
-		start: 4,
-		end: 6,
-		text: "I would like to tell you something",
+		start: 7,
+		end: 11,
+		text: "Robots are going to take over the world.",
 		pitch: 30,
 		showText: true,
 		pluginPath: "js/plugins/speak/",
@@ -45,10 +48,20 @@ function init() {
 	});
 
 	popcorn.speak({
-		start: 7,
-		end: 10,
-		text: "Robots are going to take over the world and there's nothing you can do to stop us.",
-		pitch: 120,
+		start: 18,
+		end: 21,
+		text: "I was just thinking that popcorn is total ee awesome.",
+		pitch: 30,
+		speed: 200,
+		pluginPath: "js/plugins/speak/",
+		target: "speak",
+	});
+
+	popcorn.speak({
+		start: 12,
+		end: 15,
+		text: "Fabulous, yeah!",
+		pitch: 100,
 		showText: true,
 		pluginPath: "js/plugins/speak/",
 		target: "speak",
@@ -56,9 +69,11 @@ function init() {
 
 	//POPCORN SPEAK
 	popcorn.zoink({
-		start: 6,
+		start: 9,
 		end: 10,
-		text: "<img src=\"img/zoink.png\" />",
+		text: "BLAM",
+		classes: "fx bottom right",
+		textClasses: "rumble",
 		top: 20,
 		left: 70,
 		target: "video-container"
@@ -68,10 +83,12 @@ function init() {
 	popcorn.zoink({
 		start: 18,
 		end: 21,
-		text: "I was just thinking that popcorn is totally awesome. Don't you agree?",
-		top: 20,
-		left: 20,
-		style: "thought",
+		text: "I was just thinking that popcorn is <strong>totally</strong> awesome. Don't you agree?",
+		textClasses: "rumble",
+		top: 50,
+		left: 62,
+		style: "speech",
+		classes: "top left",
 		target: "video-container"
 	});
 
@@ -83,10 +100,20 @@ function init() {
         lat: 37.7706,
         lng: -122.3782,
         zoom: 12
-      })
+      });
 
+	popcorn.flickr({
+        start: 20,
+        end: 30,
+        tags: "pony",
+        target: "flickr",
+        padding: "0px",
+        width: "50%",
+        height: "50%",
+        numberofimages: 4
+    });
 
-	popcorn.volume(0.5);
+	popcorn.mute();
 	popcorn.off("canplayall", init);
 }
 
